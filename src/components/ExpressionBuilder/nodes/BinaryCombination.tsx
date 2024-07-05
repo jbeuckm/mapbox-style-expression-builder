@@ -1,10 +1,10 @@
-import React, { memo, useCallback, useState } from 'react'
-import { Handle, Position, useEdges, useNodeId, useNodes } from 'reactflow'
+import React, { memo, useCallback } from 'react'
+import { useEdges, useNodeId, useNodes } from 'reactflow'
 import { Combination } from './Combination'
 import { useSetNodeData } from './useSetNodeData'
 import { useNodeData } from './useNodeData'
 
-const operations = ['+', '-', '*', '/']
+const operations = ['+', '-', '*', '/', '%', '^', 'max', 'min']
 
 export const BinaryCombination = memo(({ data, isConnectable }) => {
   const nodeId = useNodeId()
@@ -42,4 +42,5 @@ BinaryCombination.getDefaultNode = () => ({
   type: 'binaryCombination',
   position: { x: 0, y: 0 },
   data: { operation: '+' },
+  style: { width: 60, textAlign: 'center' },
 })

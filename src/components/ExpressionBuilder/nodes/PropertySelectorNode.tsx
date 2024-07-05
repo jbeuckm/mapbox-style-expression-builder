@@ -39,6 +39,6 @@ PropertySelectorNode.getDefaultNode = (context: any) => ({
   id: `${new Date()}`,
   type: 'propertySelector',
   position: { x: 0, y: 0 },
-  data: { properties: context.properties },
+  data: { properties: context.properties, property: context.properties[0] },
   style: { padding: 4, border: '1px solid black' },
 })
