@@ -1,0 +1,5 @@
+.react-flow__node {
+    padding: 4px;
+    border: 1px solid black;
+    border-radius: 4px;
+}

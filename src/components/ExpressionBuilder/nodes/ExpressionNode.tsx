@@ -27,7 +27,9 @@ export const ExpressionNode = memo(({ data, isConnectable }) => {
   return (
     <>
       <span style={{ display: 'flex', gap: 4 }}>
-        <div>{inputNode?.data?.expression || '(empty)'}</div>
+        <div>
+          {inputNode?.data?.expression || <span style={{ fontStyle: 'italic' }}>(empty)</span>}
+        </div>
       </span>
 
       <Handle type="target" position={Position.Top} id="input" isConnectable={isConnectable} />

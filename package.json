@@ -27,6 +27,7 @@
     "@storybook/react": "^8.1.11",
     "@storybook/react-vite": "^8.1.11",
     "@storybook/test": "^8.1.11",
+    "@types/ramda": "^0.30.0",
     "@types/react": "^18.3.3",
     "react": "^18.3.1",
     "rollup": "^4.18.0",
@@ -35,7 +36,8 @@
     "rollup-plugin-postcss": "^4.0.2",
     "storybook": "^8.1.11",
     "tslib": "^2.6.3",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "vite": "^5.3.3"
   },
   "dependencies": {
     "ramda": "^0.30.1",

@@ -12,10 +12,16 @@ import ReactFlow, {
 import { PropertySelectorNode } from './nodes/PropertySelectorNode'
 import 'reactflow/dist/style.css'
 import { ExpressionNode } from './nodes/ExpressionNode'
+import './ExpressionBuilder.css'
+import { BinaryCombination } from './nodes/BinaryCombination'
 
-const nodeTypes = { propertySelector: PropertySelectorNode, expression: ExpressionNode }
+const nodeTypes = {
+  propertySelector: PropertySelectorNode,
+  expression: ExpressionNode,
+  binaryCombination: BinaryCombination,
+}
 
-const initialEdges = [] //[{ id: 'e1-2', source: '1', target: '2', targetHandle: 'input' }]
+const initialEdges = []
 
 type ExpressionBuilderProps = {
   properties: string[]
@@ -31,7 +37,12 @@ export const ExpressionBuilder = (context: ExpressionBuilderProps) => {
         position: { x: 0, y: 0 },
       },
       // PropertySelectorNode.getDefaultNode(context),
-      { id: '2', type: 'expression', position: { x: 0, y: 100 }, data: { label: '2' } },
+      {
+        id: '2',
+        type: 'expression',
+        position: { x: 0, y: 100 },
+        data: { label: '2' },
+      },
     ],
     []
   )
@@ -41,7 +52,6 @@ export const ExpressionBuilder = (context: ExpressionBuilderProps) => {
 
   const onConnect = useCallback(
     params => {
-      console.log(params)
       setEdges(eds => addEdge(params, eds))
     },
     [setEdges]
