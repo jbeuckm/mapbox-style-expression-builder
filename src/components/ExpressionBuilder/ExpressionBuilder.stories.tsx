@@ -10,7 +10,5 @@ const Template: StoryFn<typeof ExpressionBuilder> = args => <ExpressionBuilder {
 
 export const ExpressionBuilderTest = Template.bind({})
 ExpressionBuilderTest.args = {
-  title: 'Default theme',
-  theme: 'primary',
-  testIdPrefix: 'rating',
+  properties: ['p1', 'p2', 'p3'],
 }
