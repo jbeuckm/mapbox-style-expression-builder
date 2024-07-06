@@ -74,7 +74,7 @@ export const ContinuousPalette = memo(({ data, isConnectable }) => {
       data={data}
       isConnectable={isConnectable}
     >
-      <select name="property" id="property" value={nodeData.scheme} onChange={handleChange}>
+      <select name="scheme" id="scheme" value={nodeData.scheme} onChange={handleChange}>
         {SCHEME_NAMES.map(scheme => (
           <option key={scheme} value={scheme}>
             {scheme}

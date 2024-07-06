@@ -13,36 +13,15 @@ export default {
 const MAPBOX_TOKEN =
   'pk.eyJ1IjoiamJldWNrbSIsImEiOiJjajhvOTdiaXAwMHFoMzNubnUyeWd5b3ZiIn0.qbmerZkVwFqby1cncanbvg'
 
-const parkLayer: Partial<FillLayer> = {
-  id: 'density',
-  type: 'fill',
-  // filter: ['==', 'class', 'park'],
-  paint: {
-    'fill-color': [
-      'interpolate',
-      ['linear'],
-      ['get', 'density'],
-      0,
-      ['to-color', '#440154'],
-      50,
-      ['to-color', '#3b528b'],
-      100,
-      ['to-color', '#21918c'],
-      550,
-      ['to-color', '#5ec962'],
-      1000,
-      ['to-color', '#fde725'],
-    ],
-  },
-}
-
 const Template: StoryFn<typeof ExpressionBuilder> = args => {
   const [allData, setAllData] = useState(null)
 
+  const [layers, setLayers] = useState([])
+  console.log(layers)
   return (
     <div style={{ display: 'flex' }}>
       <div style={{ width: '50%' }}>
-        <ExpressionBuilder properties={['name', 'density']} />
+        <ExpressionBuilder properties={['name', 'density']} onChange={c => setLayers(c.layers)} />
       </div>
       <div style={{ width: '50%' }}>
         <Map
@@ -56,7 +35,9 @@ const Template: StoryFn<typeof ExpressionBuilder> = args => {
           interactiveLayerIds={['data']}
         >
           <Source type="geojson" data={STATES}>
-            <Layer {...parkLayer} />
+            {layers.map(layer => (
+              <Layer {...layer} />
+            ))}
           </Source>
         </Map>
       </div>
