@@ -14,14 +14,14 @@ import 'reactflow/dist/style.css'
 import { ExpressionNode } from './nodes/ExpressionNode'
 import './ExpressionBuilder.css'
 import { BinaryCombination } from './nodes/BinaryCombination'
+import { ContinuousPalette } from './nodes/ContinuousPalette'
 
 const nodeTypes = {
   propertySelector: PropertySelectorNode,
   expression: ExpressionNode,
   binaryCombination: BinaryCombination,
+  continuousPalette: ContinuousPalette,
 }
-
-const initialEdges = []
 
 type ExpressionBuilderProps = {
   properties: string[]
@@ -30,13 +30,7 @@ type ExpressionBuilderProps = {
 export const ExpressionBuilder = (context: ExpressionBuilderProps) => {
   const initialNodes = useMemo(
     () => [
-      {
-        id: '1',
-        type: 'propertySelector',
-        data: { properties: context.properties },
-        position: { x: 0, y: 0 },
-      },
-      // PropertySelectorNode.getDefaultNode(context),
+      PropertySelectorNode.getDefaultNode(context),
       {
         id: '2',
         type: 'expression',
@@ -48,7 +42,7 @@ export const ExpressionBuilder = (context: ExpressionBuilderProps) => {
   )
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
+  const [edges, setEdges, onEdgesChange] = useEdgesState([])
 
   const onConnect = useCallback(
     params => {

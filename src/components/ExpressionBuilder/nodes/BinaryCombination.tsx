@@ -22,7 +22,7 @@ export const BinaryCombination = memo(({ data, isConnectable }) => {
   return (
     <Combination
       inputs={['a', 'b']}
-      getExpression={({ a, b }) => `["${nodeData?.operation}", ${a}, ${b}]`}
+      getExpression={({ a, b }) => [nodeData?.operation, a, b]}
       data={data}
       isConnectable={isConnectable}
     >
@@ -42,5 +42,5 @@ BinaryCombination.getDefaultNode = () => ({
   type: 'binaryCombination',
   position: { x: 0, y: 0 },
   data: { operation: '+' },
-  style: { width: 60, textAlign: 'center' },
+  style: { textAlign: 'center' },
 })

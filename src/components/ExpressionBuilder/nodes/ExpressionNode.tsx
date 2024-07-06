@@ -28,7 +28,11 @@ export const ExpressionNode = memo(({ data, isConnectable }) => {
     <>
       <span style={{ display: 'flex', gap: 4 }}>
         <div>
-          {inputNode?.data?.expression || <span style={{ fontStyle: 'italic' }}>(empty)</span>}
+          {inputNode?.data?.expression ? (
+            JSON.stringify(inputNode?.data?.expression)
+          ) : (
+            <span style={{ fontStyle: 'italic' }}>(empty)</span>
+          )}
         </div>
       </span>
 
@@ -38,7 +42,7 @@ export const ExpressionNode = memo(({ data, isConnectable }) => {
 })
 
 ExpressionNode.getDefaultNode = (context: any) => ({
-  id: `${new Date()}`,
+  id: `${+new Date()}`,
   type: 'expression',
   position: { x: 0, y: 0 },
   data: {},

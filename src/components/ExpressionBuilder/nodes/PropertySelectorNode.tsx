@@ -1,19 +1,24 @@
-import React, { memo, useCallback } from 'react'
-import { Handle, Position, useNodeId, useReactFlow } from 'reactflow'
-import { assocPath } from 'ramda'
+import React, { memo, useCallback, useEffect } from 'react'
+import { Handle, Position, useNodeId } from 'reactflow'
 import { useSetNodeData } from './useSetNodeData'
+import { useNodeData } from './useNodeData'
 
 export const PropertySelectorNode = memo(({ data, isConnectable }) => {
-  const { setNodes } = useReactFlow()
   const nodeId = useNodeId()
 
   const setNodeData = useSetNodeData()
+  const nodeData = useNodeData()
 
   const handleChange = useCallback(event => {
     const property = event?.target.value
 
     setNodeData('property', property)
-    setNodeData('expression', `["get", "${property}"]`)
+    setNodeData('expression', ['get', property])
+  }, [])
+
+  useEffect(() => {
+    setNodeData('property', nodeData.property)
+    setNodeData('expression', ['get', nodeData.property])
   }, [])
 
   return (
@@ -36,9 +41,12 @@ export const PropertySelectorNode = memo(({ data, isConnectable }) => {
 })
 
 PropertySelectorNode.getDefaultNode = (context: any) => ({
-  id: `${new Date()}`,
+  id: `${+new Date()}`,
   type: 'propertySelector',
   position: { x: 0, y: 0 },
-  data: { properties: context.properties, property: context.properties[0] },
+  data: {
+    properties: context.properties,
+    property: context.properties[0],
+  },
   style: { padding: 4, border: '1px solid black' },
 })
