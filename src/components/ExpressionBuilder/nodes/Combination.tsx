@@ -1,6 +1,5 @@
 import React, { memo, useEffect } from 'react'
 import { Handle, Position, useEdges, useNodeId, useNodes } from 'reactflow'
-import { useSetNodeExpression } from './useSetNodeExpression'
 import { omit } from 'ramda'
 import { useNodeData } from './useNodeData'
 
@@ -9,7 +8,7 @@ export const Combination = memo(({ inputs, children, getExpression, data, isConn
   const nodes = useNodes()
   const edges = useEdges()
 
-  const [nodeData] = useNodeData()
+  const [nodeData, setNodeData] = useNodeData()
 
   const expressionInputs = edges.reduce((acc, edge) => {
     if (!edge.targetHandle || edge.target !== nodeId) return acc
@@ -23,10 +22,8 @@ export const Combination = memo(({ inputs, children, getExpression, data, isConn
     }
   }, {})
 
-  const setExpression = useSetNodeExpression()
-
   useEffect(() => {
-    setExpression(getExpression(expressionInputs))
+    setNodeData('expression', getExpression(expressionInputs))
   }, [JSON.stringify(expressionInputs), JSON.stringify(omit(['expression'], nodeData))])
 
   return (
