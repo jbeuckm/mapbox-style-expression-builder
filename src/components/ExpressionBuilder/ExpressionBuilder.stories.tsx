@@ -17,7 +17,7 @@ const Template: StoryFn<typeof ExpressionBuilder> = args => {
   const [allData, setAllData] = useState(null)
 
   const [layers, setLayers] = useState([])
-  console.log(layers)
+
   return (
     <div style={{ display: 'flex' }}>
       <div style={{ width: '50%' }}>
@@ -35,8 +35,8 @@ const Template: StoryFn<typeof ExpressionBuilder> = args => {
           interactiveLayerIds={['data']}
         >
           <Source type="geojson" data={STATES}>
-            {layers.map(layer => (
-              <Layer {...layer} />
+            {layers.map((layer, index) => (
+              <Layer key={index} {...layer} />
             ))}
           </Source>
         </Map>

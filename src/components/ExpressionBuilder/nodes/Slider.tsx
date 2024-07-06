@@ -1,6 +1,7 @@
-import React, { memo, useCallback } from 'react'
-import { Handle, Position } from 'reactflow'
+import React, { memo, useCallback, useState } from 'react'
+import { Handle, Position, useNodeId, useNodes, useReactFlow } from 'reactflow'
 import { useNodeData } from './useNodeData'
+import { assocPath } from 'ramda'
 
 export const Slider = memo(({ data, isConnectable }) => {
   const [nodeData, setNodeData] = useNodeData()
@@ -11,23 +12,9 @@ export const Slider = memo(({ data, isConnectable }) => {
     setNodeData('expression', parseFloat(constant))
   }, [])
 
-  const stopDrag = useCallback(event => {
-    event.stopPropagation()
-    event.preventDefault()
-  }, [])
-
   return (
     <>
-      <div
-        onMouseDown={stopDrag}
-        onDragStart={stopDrag}
-        onDrag={stopDrag}
-        onDragEnter={stopDrag}
-        onDragExit={stopDrag}
-        onDrop={stopDrag}
-        onDragOver={stopDrag}
-        style={{ display: 'flex', gap: 4 }}
-      >
+      <div style={{ display: 'flex', gap: 4 }}>
         <input type="range" value={nodeData.expression} onChange={handleChange} />
         <span>{nodeData.expression}</span>
       </div>

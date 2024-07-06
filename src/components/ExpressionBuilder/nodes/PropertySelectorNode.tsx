@@ -1,6 +1,7 @@
 import React, { memo, useCallback, useEffect } from 'react'
 import { Handle, Position } from 'reactflow'
 import { useNodeData } from './useNodeData'
+import { omit } from 'ramda'
 
 export const PropertySelectorNode = memo(({ data, isConnectable }) => {
   const [nodeData, setNodeData] = useNodeData()
@@ -8,19 +9,18 @@ export const PropertySelectorNode = memo(({ data, isConnectable }) => {
   const handleChange = useCallback(
     event => {
       const property = event?.target.value
-      console.log({ property })
       setNodeData('property', property)
-      setNodeData('expression', ['get', property])
     },
     [setNodeData]
   )
 
   useEffect(() => {
     setNodeData('property', nodeData.property)
-    setNodeData('expression', ['get', nodeData.property])
   }, [])
 
-  console.log(nodeData.property)
+  useEffect(() => {
+    setNodeData('expression', ['get', nodeData.property])
+  }, [JSON.stringify(omit(['expression'], nodeData))])
 
   return (
     <>
