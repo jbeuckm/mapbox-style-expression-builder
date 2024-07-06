@@ -18,7 +18,21 @@ const parkLayer: Partial<FillLayer> = {
   type: 'fill',
   // filter: ['==', 'class', 'park'],
   paint: {
-    'fill-color': ['get', 'density'],
+    'fill-color': [
+      'interpolate',
+      ['linear'],
+      ['get', 'density'],
+      0,
+      ['to-color', '#440154'],
+      50,
+      ['to-color', '#3b528b'],
+      100,
+      ['to-color', '#21918c'],
+      550,
+      ['to-color', '#5ec962'],
+      1000,
+      ['to-color', '#fde725'],
+    ],
   },
 }
 

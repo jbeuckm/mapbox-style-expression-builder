@@ -15,12 +15,14 @@ import { ExpressionNode } from './nodes/ExpressionNode'
 import './ExpressionBuilder.css'
 import { BinaryCombination } from './nodes/BinaryCombination'
 import { ContinuousPalette } from './nodes/ContinuousPalette'
+import { Constant } from './nodes/Constant'
 
 const nodeTypes = {
   propertySelector: PropertySelectorNode,
   expression: ExpressionNode,
   binaryCombination: BinaryCombination,
   continuousPalette: ContinuousPalette,
+  constant: Constant,
 }
 
 type ExpressionBuilderProps = {

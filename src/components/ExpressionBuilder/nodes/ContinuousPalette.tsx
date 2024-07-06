@@ -47,11 +47,10 @@ export const ContinuousPalette = memo(({ data, isConnectable }) => {
       inputs={['value', 'min', 'center', 'max']}
       getExpression={inputExpressions => {
         const min = Number(inputExpressions.min)
-        const center = Number(inputExpressions.center)
         const max = Number(inputExpressions.max)
+        const center = inputExpressions.center ? Number(inputExpressions.center) : (min + max) / 2
 
         const schemeFnName = SCHEMES[nodeData.scheme]
-
         const fn = d3[schemeFnName]
 
         const exp = [
