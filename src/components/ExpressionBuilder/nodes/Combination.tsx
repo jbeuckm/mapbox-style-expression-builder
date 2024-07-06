@@ -9,6 +9,8 @@ export const Combination = memo(({ inputs, children, getExpression, data, isConn
   const nodes = useNodes()
   const edges = useEdges()
 
+  const [nodeData] = useNodeData()
+
   const expressionInputs = edges.reduce((acc, edge) => {
     if (!edge.targetHandle || edge.target !== nodeId) return acc
 
@@ -22,7 +24,6 @@ export const Combination = memo(({ inputs, children, getExpression, data, isConn
   }, {})
 
   const setExpression = useSetNodeExpression()
-  const nodeData = useNodeData()
 
   useEffect(() => {
     setExpression(getExpression(expressionInputs))

@@ -1,13 +1,9 @@
 import React, { memo, useCallback, useEffect } from 'react'
-import { Handle, Position, useNodeId } from 'reactflow'
-import { useSetNodeData } from './useSetNodeData'
+import { Handle, Position } from 'reactflow'
 import { useNodeData } from './useNodeData'
 
 export const PropertySelectorNode = memo(({ data, isConnectable }) => {
-  const nodeId = useNodeId()
-
-  const setNodeData = useSetNodeData()
-  const nodeData = useNodeData()
+  const [nodeData, setNodeData] = useNodeData()
 
   const handleChange = useCallback(event => {
     const property = event?.target.value

@@ -1,23 +1,15 @@
 import React, { memo, useCallback } from 'react'
-import { useEdges, useNodeId, useNodes } from 'reactflow'
 import { Combination } from './Combination'
-import { useSetNodeData } from './useSetNodeData'
 import { useNodeData } from './useNodeData'
 
 const operations = ['+', '-', '*', '/', '%', '^', 'max', 'min']
 
 export const BinaryCombination = memo(({ data, isConnectable }) => {
-  const nodeId = useNodeId()
-  const nodes = useNodes()
-  const edges = useEdges()
-
-  const setNodeData = useSetNodeData()
+  const [nodeData, setNodeData] = useNodeData()
 
   const handleChange = useCallback(event => {
     setNodeData('operation', event.target.value)
   }, [])
-
-  const nodeData = useNodeData()
 
   return (
     <Combination

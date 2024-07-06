@@ -1,7 +1,5 @@
 import React, { memo, useCallback } from 'react'
-import { useEdges, useNodeId, useNodes } from 'reactflow'
 import { Combination } from './Combination'
-import { useSetNodeData } from './useSetNodeData'
 import { useNodeData } from './useNodeData'
 import * as d3 from 'd3'
 
@@ -38,17 +36,11 @@ const SCHEMES = {
 const SCHEME_NAMES = Object.keys(SCHEMES)
 
 export const ContinuousPalette = memo(({ data, isConnectable }) => {
-  const nodeId = useNodeId()
-  const nodes = useNodes()
-  const edges = useEdges()
-
-  const setNodeData = useSetNodeData()
+  const [nodeData, setNodeData] = useNodeData()
 
   const handleChange = useCallback(event => {
     setNodeData('scheme', event.target.value)
   }, [])
-
-  const nodeData = useNodeData()
 
   return (
     <Combination

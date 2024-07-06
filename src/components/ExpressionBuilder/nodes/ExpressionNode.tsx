@@ -1,13 +1,5 @@
 import React, { memo } from 'react'
-import {
-  Handle,
-  Position,
-  getConnectedEdges,
-  getIncomers,
-  useEdges,
-  useNodeId,
-  useNodes,
-} from 'reactflow'
+import { Handle, Position, useEdges, useNodeId, useNodes } from 'reactflow'
 
 export const ExpressionNode = memo(({ data, isConnectable }) => {
   const nodeId = useNodeId()
