@@ -18,7 +18,7 @@ import { BinaryCombination } from './nodes/BinaryCombination'
 import { ContinuousPalette } from './nodes/ContinuousPalette'
 import { Constant } from './nodes/Constant'
 import { Slider } from './nodes/Slider'
-import { LayerOutput } from './nodes/LayerOutput'
+import { FillLayer } from './nodes/FillLayer'
 import { path, prop } from 'ramda'
 
 const nodeTypes = {
@@ -28,7 +28,7 @@ const nodeTypes = {
   continuousPalette: ContinuousPalette,
   constant: Constant,
   slider: Slider,
-  layerOutput: LayerOutput,
+  fillLayer: FillLayer,
 }
 
 type ExpressionBuilderProps = {
@@ -69,7 +69,7 @@ export const Impl = (context: ExpressionBuilderProps) => {
       const flow = rfInstance.toObject()
 
       const outputs = flow.nodes
-        .filter(({ type }) => type === 'layerOutput')
+        .filter(({ type }) => type === 'fillLayer')
         .map(path(['data', 'expression']))
       context.onChange?.({ layers: outputs })
 
