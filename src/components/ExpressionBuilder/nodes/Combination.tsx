@@ -30,6 +30,7 @@ export const Combination = memo(({ inputs, children, getExpression, data, isConn
     <>
       {inputs.map((input, index) => (
         <Handle
+          key={input}
           className="tooltip"
           type="target"
           position={Position.Top}
@@ -37,7 +38,7 @@ export const Combination = memo(({ inputs, children, getExpression, data, isConn
           isConnectable={isConnectable}
           style={{ left: 20 + 20 * index }}
         >
-          <span class="tooltiptext">{input}</span>
+          <span className="tooltiptext">{input}</span>
         </Handle>
       ))}
 

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import ReactFlow, {
   MiniMap,
   Controls,
@@ -7,6 +7,7 @@ import ReactFlow, {
   useEdgesState,
   addEdge,
   useReactFlow,
+  ReactFlowProvider,
 } from 'reactflow'
 
 import { PropertySelectorNode } from './nodes/PropertySelectorNode'
@@ -16,6 +17,7 @@ import './ExpressionBuilder.css'
 import { BinaryCombination } from './nodes/BinaryCombination'
 import { ContinuousPalette } from './nodes/ContinuousPalette'
 import { Constant } from './nodes/Constant'
+import { Slider } from './nodes/Slider'
 
 const nodeTypes = {
   propertySelector: PropertySelectorNode,
@@ -23,27 +25,17 @@ const nodeTypes = {
   binaryCombination: BinaryCombination,
   continuousPalette: ContinuousPalette,
   constant: Constant,
+  slider: Slider,
 }
 
 type ExpressionBuilderProps = {
   properties: string[]
 }
 
-export const ExpressionBuilder = (context: ExpressionBuilderProps) => {
-  const initialNodes = useMemo(
-    () => [
-      PropertySelectorNode.getDefaultNode(context),
-      {
-        id: '2',
-        type: 'expression',
-        position: { x: 0, y: 100 },
-        data: { label: '2' },
-      },
-    ],
-    []
-  )
+const flowKey = 'example-flow'
 
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
+export const Impl = (context: ExpressionBuilderProps) => {
+  const [nodes, setNodes, onNodesChange] = useNodesState([])
   const [edges, setEdges, onEdgesChange] = useEdgesState([])
 
   const onConnect = useCallback(
@@ -61,6 +53,43 @@ export const ExpressionBuilder = (context: ExpressionBuilderProps) => {
     setNodes(nodes => [...nodes, nodeTypes[addNodeType].getDefaultNode(context)])
   }, [addNodeType])
 
+  const [rfInstance, setRfInstance] = useState(null)
+  const { setViewport } = useReactFlow()
+
+  const [saveEnabled, setSaveEnabled] = useState(false)
+
+  const onSave = useCallback(() => {
+    if (!saveEnabled) return
+
+    if (rfInstance) {
+      const flow = rfInstance.toObject()
+
+      localStorage.setItem(flowKey, JSON.stringify(flow))
+    }
+  }, [rfInstance, saveEnabled])
+
+  const onRestore = useCallback(() => {
+    const restoreFlow = async () => {
+      const flow = JSON.parse(localStorage.getItem(flowKey))
+
+      if (flow) {
+        const { x = 0, y = 0, zoom = 1 } = flow.viewport
+        setNodes(flow.nodes || [])
+        setEdges(flow.edges || [])
+        setViewport({ x, y, zoom })
+      }
+    }
+
+    restoreFlow()
+  }, [setNodes, setViewport])
+
+  useEffect(() => {
+    if (!rfInstance) return
+    onRestore()
+
+    setSaveEnabled(true)
+  }, [!!rfInstance])
+
   return (
     <>
       <select value={addNodeType} onChange={handleSelectNodeType}>
@@ -75,10 +104,17 @@ export const ExpressionBuilder = (context: ExpressionBuilderProps) => {
         <ReactFlow
           nodes={nodes}
           edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
+          onNodesChange={(...args) => {
+            onSave()
+            onNodesChange(...args)
+          }}
+          onEdgesChange={(...args) => {
+            onSave()
+            onEdgesChange(...args)
+          }}
           onConnect={onConnect}
           nodeTypes={nodeTypes}
+          onInit={setRfInstance}
         >
           <MiniMap />
           <Controls />
@@ -88,3 +124,9 @@ export const ExpressionBuilder = (context: ExpressionBuilderProps) => {
     </>
   )
 }
+
+export const ExpressionBuilder = props => (
+  <ReactFlowProvider>
+    <Impl {...props} />
+  </ReactFlowProvider>
+)

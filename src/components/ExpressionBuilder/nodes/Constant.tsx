@@ -29,6 +29,6 @@ Constant.getDefaultNode = (context: any) => ({
   id: `${+new Date()}`,
   type: 'constant',
   position: { x: 0, y: 0 },
-  data: { constant: 1 },
+  data: { expression: 1 },
   style: { padding: 4, border: '1px solid black' },
 })

@@ -20,7 +20,7 @@ export const ExpressionNode = memo(({ data, isConnectable }) => {
     <>
       <span style={{ display: 'flex', gap: 4 }}>
         <div>
-          {inputNode?.data?.expression ? (
+          {typeof inputNode?.data?.expression !== 'undefined' ? (
             JSON.stringify(inputNode?.data?.expression)
           ) : (
             <span style={{ fontStyle: 'italic' }}>(empty)</span>
