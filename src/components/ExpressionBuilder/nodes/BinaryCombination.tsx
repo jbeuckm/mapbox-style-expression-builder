@@ -2,7 +2,7 @@ import React, { memo, useCallback } from 'react'
 import { Combination } from './Combination'
 import { useNodeData } from './useNodeData'
 
-const operations = ['+', '-', '*', '/', '%', '^', 'max', 'min']
+const operations = ['+', '-', '*', '/', '%', '^', 'max', 'min', '!=', '==', '<', '<=', '>', '>=']
 
 export const BinaryCombination = memo(({ data, isConnectable }) => {
   const [nodeData, setNodeData] = useNodeData()
