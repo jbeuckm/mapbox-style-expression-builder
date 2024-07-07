@@ -19,15 +19,21 @@ export const Slider = memo(({ data, isConnectable }) => {
         { id: 'min', default: 0 },
         { id: 'max', default: 100 },
       ]}
-      getExpression={({ min, max }) => nodeData.constant}
+      getExpression={({ min, max }) => min + (nodeData.constant / 100) * (max - min)}
       data={data}
       isConnectable={isConnectable}
     >
-      {() => (
+      {({ inputValues: { min, max } }) => (
         <>
           <div style={{ display: 'flex', gap: 4 }}>
-            <input type="range" value={nodeData.constant} onChange={handleChange} />
-            <span>{nodeData.constant}</span>
+            <input
+              type="range"
+              value={nodeData.constant}
+              onChange={handleChange}
+              min={0}
+              max={100}
+            />
+            <span>{(min + (nodeData.constant / 100) * (max - min)).toPrecision(4)}</span>
           </div>
 
           <Handle
