@@ -7,16 +7,23 @@ export const FillLayer = memo(({ data, isConnectable }) => {
 
   return (
     <Combination
-      inputs={['filter', 'fill-color']}
-      getExpression={inputs => ({
-        filter: inputs['filter'],
-        paint: { ['fill-color']: inputs['fill-color'] },
-        type: 'fill',
-      })}
+      inputs={[{ id: 'filter' }, { id: 'fill-color' }]}
+      getExpression={inputs => {
+        const exp = {
+          type: 'fill',
+          paint: { ['fill-color']: inputs['fill-color'] },
+        }
+
+        if (inputs['filter']) {
+          exp.filter = inputs['filter']
+        }
+
+        return exp
+      }}
       data={data}
       isConnectable={isConnectable}
     >
-      Fill Layer
+      {() => <>fillLayer</>}
     </Combination>
   )
 })

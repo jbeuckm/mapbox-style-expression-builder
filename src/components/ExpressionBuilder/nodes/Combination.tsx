@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import React, { createContext, memo, useEffect, useMemo } from 'react'
 import { Handle, Position, useEdges, useNodeId, useNodes } from 'reactflow'
 import { omit } from 'ramda'
 import { useNodeData } from './useNodeData'
@@ -10,7 +10,7 @@ export const Combination = memo(({ inputs, children, getExpression, data, isConn
 
   const [nodeData, setNodeData] = useNodeData()
 
-  const expressionInputs = edges.reduce((acc, edge) => {
+  const connectedInputs = edges.reduce((acc, edge) => {
     if (!edge.targetHandle || edge.target !== nodeId) return acc
 
     const node = nodes.find(node => node.id === edge.source)
@@ -22,6 +22,14 @@ export const Combination = memo(({ inputs, children, getExpression, data, isConn
     }
   }, {})
 
+  const expressionInputs = inputs.reduce(
+    (acc, input) => ({
+      [input.id]: connectedInputs[input.id] ?? input.default,
+      ...acc,
+    }),
+    {}
+  )
+
   useEffect(() => {
     setNodeData('expression', getExpression(expressionInputs))
   }, [JSON.stringify(expressionInputs), JSON.stringify(omit(['expression'], nodeData))])
@@ -30,19 +38,21 @@ export const Combination = memo(({ inputs, children, getExpression, data, isConn
     <>
       {inputs.map((input, index) => (
         <Handle
-          key={input}
+          key={input.id}
           className="tooltip"
           type="target"
           position={Position.Top}
-          id={input}
+          id={input.id}
           isConnectable={isConnectable}
           style={{ left: 20 + 20 * index }}
         >
-          <span className="tooltiptext">{input}</span>
+          <span className="tooltiptext">{input.id}</span>
         </Handle>
       ))}
 
-      <div style={{ minWidth: (inputs.length + 1) * 20 }}>{children}</div>
+      <div style={{ minWidth: (inputs.length + 1) * 20 }}>
+        {children({ inputValues: expressionInputs })}
+      </div>
 
       <Handle
         type="source"

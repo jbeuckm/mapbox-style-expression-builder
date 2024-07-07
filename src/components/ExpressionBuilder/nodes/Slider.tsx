@@ -2,6 +2,7 @@ import React, { memo, useCallback, useState } from 'react'
 import { Handle, Position, useNodeId, useNodes, useReactFlow } from 'reactflow'
 import { useNodeData } from './useNodeData'
 import { assocPath } from 'ramda'
+import { Combination } from './Combination'
 
 export const Slider = memo(({ data, isConnectable }) => {
   const [nodeData, setNodeData] = useNodeData()
@@ -9,18 +10,35 @@ export const Slider = memo(({ data, isConnectable }) => {
   const handleChange = useCallback(event => {
     const constant = event?.target.value
 
-    setNodeData('expression', parseFloat(constant))
+    setNodeData('constant', parseFloat(constant))
   }, [])
 
   return (
-    <>
-      <div style={{ display: 'flex', gap: 4 }}>
-        <input type="range" value={nodeData.expression} onChange={handleChange} />
-        <span>{nodeData.expression}</span>
-      </div>
+    <Combination
+      inputs={[
+        { id: 'min', default: 0 },
+        { id: 'max', default: 100 },
+      ]}
+      getExpression={({ min, max }) => nodeData.constant}
+      data={data}
+      isConnectable={isConnectable}
+    >
+      {() => (
+        <>
+          <div style={{ display: 'flex', gap: 4 }}>
+            <input type="range" value={nodeData.constant} onChange={handleChange} />
+            <span>{nodeData.constant}</span>
+          </div>
 
-      <Handle type="source" position={Position.Bottom} id="source" isConnectable={isConnectable} />
-    </>
+          <Handle
+            type="source"
+            position={Position.Bottom}
+            id="source"
+            isConnectable={isConnectable}
+          />
+        </>
+      )}
+    </Combination>
   )
 })
 

@@ -44,7 +44,12 @@ export const ContinuousPalette = memo(({ data, isConnectable }) => {
 
   return (
     <Combination
-      inputs={['value', 'min', 'center', 'max']}
+      inputs={[
+        { id: 'value' },
+        { id: 'min', default: 0 },
+        { id: 'center' },
+        { id: 'max', default: 1 },
+      ]}
       getExpression={inputExpressions => {
         const min = Number(inputExpressions.min)
         const max = Number(inputExpressions.max)
@@ -74,13 +79,15 @@ export const ContinuousPalette = memo(({ data, isConnectable }) => {
       data={data}
       isConnectable={isConnectable}
     >
-      <select name="scheme" id="scheme" value={nodeData.scheme} onChange={handleChange}>
-        {SCHEME_NAMES.map(scheme => (
-          <option key={scheme} value={scheme}>
-            {scheme}
-          </option>
-        ))}
-      </select>
+      {() => (
+        <select name="scheme" id="scheme" value={nodeData.scheme} onChange={handleChange}>
+          {SCHEME_NAMES.map(scheme => (
+            <option key={scheme} value={scheme}>
+              {scheme}
+            </option>
+          ))}
+        </select>
+      )}
     </Combination>
   )
 })

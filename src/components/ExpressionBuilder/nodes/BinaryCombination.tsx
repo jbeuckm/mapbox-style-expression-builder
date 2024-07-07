@@ -13,18 +13,20 @@ export const BinaryCombination = memo(({ data, isConnectable }) => {
 
   return (
     <Combination
-      inputs={['a', 'b']}
+      inputs={[{ id: 'a' }, { id: 'b' }]}
       getExpression={({ a, b }) => [nodeData?.operation, a, b]}
       data={data}
       isConnectable={isConnectable}
     >
-      <select name="property" id="property" onChange={handleChange}>
-        {operations.map(operation => (
-          <option key={operation} value={operation}>
-            {operation}
-          </option>
-        ))}
-      </select>
+      {() => (
+        <select name="property" id="property" onChange={handleChange}>
+          {operations.map(operation => (
+            <option key={operation} value={operation}>
+              {operation}
+            </option>
+          ))}
+        </select>
+      )}
     </Combination>
   )
 })
