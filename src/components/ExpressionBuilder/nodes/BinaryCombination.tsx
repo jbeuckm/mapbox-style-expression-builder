@@ -19,7 +19,7 @@ export const BinaryCombination = memo(({ data, isConnectable }) => {
       isConnectable={isConnectable}
     >
       {() => (
-        <select name="property" id="property" onChange={handleChange}>
+        <select name="property" id="property" value={nodeData.operation} onChange={handleChange}>
           {operations.map(operation => (
             <option key={operation} value={operation}>
               {operation}

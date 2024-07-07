@@ -12,7 +12,7 @@ import ReactFlow, {
 
 import { PropertySelectorNode } from './nodes/PropertySelectorNode'
 import 'reactflow/dist/style.css'
-import { ExpressionNode } from './nodes/ExpressionNode'
+import { Display } from './nodes/Display'
 import './ExpressionBuilder.css'
 import { BinaryCombination } from './nodes/BinaryCombination'
 import { ContinuousPalette } from './nodes/ContinuousPalette'
@@ -20,15 +20,17 @@ import { Constant } from './nodes/Constant'
 import { Slider } from './nodes/Slider'
 import { FillLayer } from './nodes/FillLayer'
 import { path, prop } from 'ramda'
+import { String } from './nodes/String'
 
 const nodeTypes = {
   propertySelector: PropertySelectorNode,
-  expression: ExpressionNode,
+  display: Display,
   binaryCombination: BinaryCombination,
   continuousPalette: ContinuousPalette,
   constant: Constant,
   slider: Slider,
   fillLayer: FillLayer,
+  string: String,
 }
 
 type ExpressionBuilderProps = {

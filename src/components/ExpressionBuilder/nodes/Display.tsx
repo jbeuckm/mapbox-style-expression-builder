@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import { Handle, Position, useEdges, useNodeId, useNodes } from 'reactflow'
 
-export const ExpressionNode = memo(({ data, isConnectable }) => {
+export const Display = memo(({ data, isConnectable }) => {
   const nodeId = useNodeId()
   const nodes = useNodes()
 
@@ -33,9 +33,9 @@ export const ExpressionNode = memo(({ data, isConnectable }) => {
   )
 })
 
-ExpressionNode.getDefaultNode = (context: any) => ({
+Display.getDefaultNode = (context: any) => ({
   id: `${+new Date()}`,
-  type: 'expression',
+  type: 'display',
   position: { x: 0, y: 0 },
   data: {},
 })
