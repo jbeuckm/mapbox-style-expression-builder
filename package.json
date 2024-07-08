@@ -1,6 +1,6 @@
 {
   "name": "mapbox-style-expression-builder",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Craft mapbox style expressions with a visual programming language.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -13,7 +13,6 @@
     "serve": "python3 -m http.server 9000"
   },
   "author": "Joseph Beuckman",
-  "license": "ISC",
   "devDependencies": {
     "@chromatic-com/storybook": "^1.6.1",
     "@rollup/plugin-commonjs": "^26.0.1",
