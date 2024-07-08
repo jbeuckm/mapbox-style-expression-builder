@@ -1,6 +1,6 @@
 {
   "name": "mapbox-style-expression-builder",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Craft mapbox style expressions with a visual programming language.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
