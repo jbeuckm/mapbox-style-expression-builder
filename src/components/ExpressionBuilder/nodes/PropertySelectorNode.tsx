@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect } from 'react'
+import React, { ChangeEvent, memo, useCallback, useEffect } from 'react'
 import { Handle, Position } from 'reactflow'
 import { useNodeData } from './useNodeData'
 import { omit } from 'ramda'
@@ -7,7 +7,7 @@ export const PropertySelectorNode = memo(({ data, isConnectable }) => {
   const [nodeData, setNodeData] = useNodeData()
 
   const handleChange = useCallback(
-    event => {
+    (event: ChangeEvent<HTMLSelectElement>) => {
       const property = event?.target.value
       setNodeData('property', property)
     },

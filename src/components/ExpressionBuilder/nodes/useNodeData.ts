@@ -1,5 +1,5 @@
 import { assocPath } from 'ramda'
-import { useNodeId, useNodes, useReactFlow } from 'reactflow'
+import { useNodeId, useNodes, useReactFlow, Node } from 'reactflow'
 
 export const useNodeData = () => {
   const nodeId = useNodeId()
@@ -11,9 +11,9 @@ export const useNodeData = () => {
 
     (key: string, value: any) =>
       setNodes(nodes =>
-        nodes.map(node => {
+        nodes.map<Node<any>>((node: Node<any>) => {
           if (node.id === nodeId) {
-            return assocPath(['data', key], value)(node)
+            return assocPath(['data', key], value)(node) as Node<any>
           }
           return node
         })

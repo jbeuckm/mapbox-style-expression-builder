@@ -1,6 +1,6 @@
 //@ts-nocheck
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from 'react'
 import ReactFlow, {
   MiniMap,
   Controls,
@@ -35,14 +35,14 @@ const nodeTypes = {
   string: String,
 }
 
-type ExpressionBuilderProps = {
+type ExpressionBuilderProps = PropsWithChildren<{
   properties: string[]
   onChange?: (layers: any) => void
-}
+}>
 
 const flowKey = 'example-flow'
 
-export const Impl = (context: ExpressionBuilderProps) => {
+export const Impl = ({ children, ...context }: ExpressionBuilderProps) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([])
   const [edges, setEdges, onEdgesChange] = useEdgesState([])
 
@@ -129,9 +129,13 @@ export const Impl = (context: ExpressionBuilderProps) => {
           nodeTypes={nodeTypes}
           onInit={setRfInstance}
         >
-          <MiniMap />
-          <Controls />
-          <Background />
+          {children || (
+            <>
+              <MiniMap />
+              <Controls />
+              <Background />
+            </>
+          )}
         </ReactFlow>
       </div>
     </>
